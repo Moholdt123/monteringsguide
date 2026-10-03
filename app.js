@@ -165,7 +165,10 @@ function render(now){
  }
  if(miniRenderer&&$('detail').open){const t=Math.min((now-miniStart)/3200,1);const eased=t*t*(3-2*t);animatedScrew.position.z=.075*(1-eased)+.01;animatedScrew.rotation.z=t*Math.PI*18;miniRenderer.render(miniScene,miniCamera);$('mini-state').textContent=t<1?'Skruen festes …':'Bevegelsen er ferdig';}
 }
-$('loading').remove();setStep(0);requestAnimationFrame(render);
+$('loading').remove();
+const requestedStep=new URLSearchParams(window.location.search).get('steg');
+const initialStep=requestedStep!==null&&/^[0-2]$/.test(requestedStep)?Number(requestedStep):0;
+setStep(initialStep);requestAnimationFrame(render);
 
 // Optional browser tools reuse the same visible state; ordinary browsers ignore this.
 if(document.modelContext?.registerTool){
