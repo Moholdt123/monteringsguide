@@ -40,14 +40,14 @@ const labels=labelDefs.map(([text,task,position])=>{const el=document.createElem
 let task=0,progress=0,playing=false,all=false,last=performance.now(),advanceAt=null;
 function renderParts(){groups.forEach((group,i)=>{group.parts.forEach((p,j)=>{p.mesh.visible=i<=task;const t=i<task?1:partProgress(progress,j,group.parts.length);p.mesh.position.copy(p.target).addScaledVector(p.offset,1-t);p.mesh.rotation.y=i===task?(1-t)*.08:0;p.mesh.material=i===task?activeWood:wood;});group.markers.forEach((m,j)=>{const t=THREE.MathUtils.clamp((progress-.72)/.28*group.markers.length-j,0,1);m.visible=$('fasteners').checked&&(i<task||(i===task&&t>0));m.scale.setScalar(i<task?1:Math.max(.05,t));});});}
 function sync(){
- $('scene-title').textContent=tasks[task].title;$('stage-title').textContent=tasks[task].title;$('stage-description').textContent=tasks[task].description;$('stage-label').textContent='ARBEIDSOPPGAVE 0'+(task+1);$('task-count').textContent=(task+1)+' / 5';
+ $('scene-title').textContent=tasks[task].title;$('stage-title').textContent=tasks[task].title;$('stage-description').textContent=tasks[task].description;$('stage-label').textContent='ARBEIDSOPPGAVE 0'+(task+1);$('task-count').textContent=(task+1)+' / 5';$('open-detail').textContent=task===0?'Detaljert bunnsvill':'Se festepunkt';
  $('phase-text').textContent=tasks[task].phase[phaseIndex(progress)];$('timeline').value=Math.round(progress*1000);$('progress-text').textContent=Math.round(progress*100)+' %';
  $('play-task').textContent=playing?'Pause':progress>=1?'Spill på nytt':progress>0?'Fortsett':'Spill dette steget';$('play-all').textContent=all?'Stopp hele oppbygningen':'Spill hele oppbygningen';
  $('previous-task').disabled=task===0;$('next-task').disabled=task===tasks.length-1;
  document.querySelectorAll('[data-task]').forEach(b=>{const active=Number(b.dataset.task)===task;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});renderParts();
 }
 function selectTask(index,continueAll=false){if(!validateTask(index))return;task=index;progress=0;playing=continueAll;all=continueAll;advanceAt=null;last=performance.now();sync();}
-document.querySelectorAll('[data-task]').forEach(b=>b.addEventListener('click',()=>selectTask(Number(b.dataset.task))));
+document.querySelectorAll('[data-task]').forEach(b=>b.addEventListener('click',()=>{const index=Number(b.dataset.task);if(index===0){location.assign('bunnsvill.html');return;}selectTask(index);}));
 $('play-task').addEventListener('click',()=>{if(playing){playing=false;}else{if(progress>=1)progress=0;playing=true;last=performance.now();}advanceAt=null;sync();});
 $('replay-task').addEventListener('click',()=>{selectTask(task);playing=true;sync();});
 $('play-all').addEventListener('click',()=>{if(all){all=false;playing=false;sync();}else{selectTask(0,true);}});
@@ -73,7 +73,7 @@ function rebuildMini(){
 }
 function resizeMini(){if(!miniRenderer)return;const w=$('fastener-viewer').clientWidth;if(!w)return;miniRenderer.setSize(w,250);miniCamera.aspect=w/250;miniCamera.updateProjectionMatrix();}
 function openDetail(index=task){detailTask=index;$('detail-title').textContent=tasks[index].detail;$('detail-description').textContent=tasks[index].detailDescription;if(!$('fastener-dialog').open)$('fastener-dialog').showModal();if(!miniRenderer)initMini();else rebuildMini();resizeMini();miniStart=performance.now();}
-$('open-detail').addEventListener('click',()=>openDetail());$('close-detail').addEventListener('click',()=>$('fastener-dialog').close());$('replay-detail').addEventListener('click',()=>{miniStart=performance.now();});
+$('open-detail').addEventListener('click',()=>{if(task===0){location.assign('bunnsvill.html');return;}openDetail();});$('close-detail').addEventListener('click',()=>$('fastener-dialog').close());$('replay-detail').addEventListener('click',()=>{miniStart=performance.now();});
 $('fastener-dialog').addEventListener('click',e=>{const r=$('fastener-dialog').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)$('fastener-dialog').close();});
 function resize(){renderer.setSize(viewer.clientWidth,viewer.clientHeight);camera.aspect=viewer.clientWidth/viewer.clientHeight;camera.updateProjectionMatrix();resizeMini();}new ResizeObserver(resize).observe(viewer);window.addEventListener('resize',resize);resize();
 const projected=new THREE.Vector3();
