@@ -1,38 +1,48 @@
 <!DOCTYPE html>
-<html lang="nb">
-<head>
+<html lang="nb"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Monteringsguide · Gipsvegg i 3D</title>
-<meta name="description" content="Utforsk en gipsvegg i 3D. Vis stenderverk, skruer og en animert detalj av innfestingen.">
+<title>Monteringsguide · Finn jobben du skal gjøre</title>
+<meta name="description" content="Finn en monteringsjobb og utforsk den i 3D. Søk etter gips, stenderverk, baderomsplater og gulv.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23152b35'/%3E%3Cpath d='M8 25V7h16v18M8 16h16M16 7v18' stroke='%2363d5bb' stroke-width='3' fill='none'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css">
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"}}</script>
-</head>
-<body>
-<header><a class="brand" href="./"><span class="brandmark">M</span> Monteringsguide</a><span class="header-note">INTERAKTIV DEMO</span><span class="guide-name">Innvendig vegg / Gips</span></header>
-<main>
-<aside class="sidebar">
-<div class="eyebrow">MONTERING I 3D</div><h1>Se hvordan<br>veggen bygges.</h1><p class="intro">Utforsk delene. Se bevegelsen. Gå nærmere detaljene.</p>
-<div class="section-title">Monteringssteg <span id="step-count">1 / 3</span></div>
-<div class="steps" aria-label="Monteringssteg">
-<button class="step active" data-step="0" aria-pressed="true"><span class="step-number">01</span><span><strong>Stenderverk</strong><small>Veggens oppbygning</small></span></button>
-<button class="step" data-step="1" aria-pressed="false"><span class="step-number">02</span><span><strong>Platen på plass</strong><small>Se plassering og bevegelse</small></span></button>
-<button class="step" data-step="2" aria-pressed="false"><span class="step-number">03</span><span><strong>Innfesting</strong><small>Utforsk skruer og avstander</small></span></button>
-</div>
-<div class="section-title">Vis i modellen</div>
-<label class="toggle-row"><span>Vis skruer</span><input id="screws" type="checkbox" role="switch"><span class="toggle"></span></label>
-<label class="toggle-row"><span>Vis avstander</span><input id="dimensions" type="checkbox" role="switch"><span class="toggle"></span></label>
-<label class="toggle-row"><span>Gjennomsiktige plater</span><input id="transparent" type="checkbox" role="switch"><span class="toggle"></span></label>
-<label class="toggle-row"><span>Vis navn på delene</span><input id="labels" type="checkbox" role="switch" checked><span class="toggle"></span></label>
-<div class="tools"><div class="section-title">Verktøy i eksempelet</div><p>Skrudrill · bits · målebånd · platekniv</p><small>Endelig liste avhenger av produkt og konstruksjon.</small></div>
-<div class="demo-notice"><strong>Visningseksempel</strong><p>Geometri, mål og skrueplassering er illustrasjoner. Produkt og produsentanvisning er ikke valgt. Ikke bruk demoen som monteringsanvisning.</p></div>
-</aside>
-<section class="workspace" aria-label="Interaktiv 3D-modell">
-<div class="viewer-header"><div><span class="eyebrow">GIPS PÅ TRESTENDERE</span><h2 id="scene-title">Veggens oppbygning</h2></div><button id="reset" class="ghost">Tilbakestill utsnitt</button></div>
-<div id="viewer"><div id="loading">Laster 3D-modellen …</div><div id="tags" aria-hidden="true"></div><div class="view-badge">3D <span>·</span> Illustrasjon</div><div class="viewer-help">Dra for å rotere · Rull for å zoome · Høyreklikk og dra for å flytte</div><button id="detail-open" class="detail-shortcut">Se skrueanimasjon</button></div>
-<div class="bottom-panel"><div class="step-copy"><span class="eyebrow" id="stage-label">STEG 01</span><h3 id="stage-title">Start med veggens ramme</h3><p id="stage-description">Se hvordan toppsvill, bunnsvill og stendere danner veggens oppbygning.</p></div><div class="play-controls"><button id="play" class="primary">Spill monteringen</button><div class="navigation"><button id="previous" class="ghost" disabled>Tilbake</button><button id="next" class="ghost">Neste steg</button></div></div></div>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="home.css">
+</head><body class="home">
+<header><a class="brand" href="./"><span class="brandmark">M</span> Monteringsguide</a><span class="header-note">INTERAKTIV DEMO</span><span class="guide-name">Finn din monteringsjobb</span></header>
+<main class="home-main">
+<section class="search-section" aria-labelledby="home-title">
+<span class="eyebrow">FRA SPØRSMÅL TIL MONTERING</span><h1 id="home-title">Hva skal du montere?</h1>
+<p>Finn jobben din, åpne 3D-visningen og se detaljene på nært hold.</p>
+<form id="search-form" class="search-box" role="search">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg>
+<label class="sr-only" for="search">Søk etter monteringsjobb</label>
+<input id="search" type="search" placeholder="Søk etter gips, stendere, gulv …" autocomplete="off" aria-controls="guide-grid">
+<button class="primary" type="submit">Finn guide</button></form>
+<div class="search-suggestions"><span>Prøv:</span><button type="button" data-query="gips">Gips</button><button type="button" data-query="stenderverk">Stenderverk</button><button type="button" data-query="baderomsplater">Baderomsplater</button><button type="button" data-query="laminat">Laminat</button></div>
 </section>
-</main>
-<dialog id="detail" aria-labelledby="detail-title"><div class="dialog-header"><div><span class="eyebrow">DETALJVISNING</span><h2 id="detail-title">Slik beveger skruen seg</h2></div><button id="detail-close" class="close" aria-label="Lukk detaljvisning">×</button></div><div id="mini-viewer"></div><div class="mini-caption"><span id="mini-state" aria-live="polite">Klar til å spille</span><button id="replay" class="primary">Spill igjen</button></div><div class="detail-body"><h3>Se innfestingen fra siden</h3><p>Skruen roterer gjennom platen og inn i treverket. Snittet gjør bevegelsen synlig.</p><div class="detail-key"><span><i class="key-board"></i>Plate</span><span><i class="key-wood"></i>Stender</span><span><i class="key-screw"></i>Skrue</span></div><p class="detail-warning">Kun en bevegelsesillustrasjon. Skruetype, lengde og sluttplassering må hentes fra anvisningen til valgt produkt.</p></div></dialog>
-<script type="module" src="app.js"></script>
-</body></html>
+<section aria-labelledby="guides-title" class="guides-section"><div class="guides-heading"><h2 id="guides-title">Velg en jobb</h2><p id="result-count" role="status" aria-live="polite">6 jobber · 2 demovisninger</p></div>
+<div id="guide-grid" class="guide-grid"><a class="guide-card available" href="gips.html?steg=1" data-search="gips gipsplate gipsplater skruer skrue skruing skrueavstand innfesting plate plater vegg vegger" data-name="Montere gipsplater">
+<div class="card-top"><span class="category">VEGG OG PLATER</span><span class="card-status ready">Åpne demo</span></div>
+<div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="10" y="6" width="28" height="36" rx="2"/><path d="M24 6v36M14 12h2m-2 8h2m-2 8h2m-2 8h2m16-24h2m-2 8h2m-2 8h2m-2 8h2"/></svg></div>
+<h3>Montere gipsplater</h3><p>Se platen på plass, fremhev skruene og åpne en animert detalj.</p><div class="card-footer"><span>Interaktiv 3D-demo</span><span class="card-action">Åpne visning</span></div></a>
+<a class="guide-card available" href="gips.html?steg=0" data-search="stender stendere stenderverk reisverk ramme vegg vegger toppsvill bunnsvill svill sviller tre treverk" data-name="Bygge stenderverk">
+<div class="card-top"><span class="category">VEGGENS OPPBYGNING</span><span class="card-status ready">Åpne demo</span></div>
+<div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8h36v4H6zm0 28h36v4H6zM9 12v24m10-24v24m10-24v24m10-24v24"/></svg></div>
+<h3>Bygge stenderverk</h3><p>Utforsk stendere, toppsvill og bunnsvill i veggens 3D-modell.</p><div class="card-footer"><span>Interaktiv 3D-demo</span><span class="card-action">Åpne visning</span></div></a>
+<article class="guide-card planned"  data-search="bad baderom baderomsplate baderomsplater våtrom vatrom tetting membran fuge fuging plater" data-name="Montere baderomsplater">
+<div class="card-top"><span class="category">BAD OG VÅTROM</span><span class="card-status ">Kommer</span></div>
+<div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="7" width="34" height="34" rx="2"/><path d="M7 18h34M7 30h34M24 7v34"/></svg></div>
+<h3>Montere baderomsplater</h3><p>Planlagt guide til plater, profiler og tetting for et valgt platesystem.</p><div class="card-footer"><span>Guide under planlegging</span></div></article>
+<article class="guide-card planned"  data-search="smartpanel smart panel panelplater veggpanel panel vegg plater" data-name="Montere Smartpanel">
+<div class="card-top"><span class="category">VEGG OG PLATER</span><span class="card-status ">Kommer</span></div>
+<div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="7" width="34" height="34" rx="2"/><path d="M15 7v34m9-34v34m9-34v34"/></svg></div>
+<h3>Montere Smartpanel</h3><p>Planlagt visning av plassering, skjøter og innfesting av veggpanel.</p><div class="card-footer"><span>Guide under planlegging</span></div></article>
+<article class="guide-card planned"  data-search="laminat laminatgulv gulv gulvbord klikkgulv underlag gulvlegging" data-name="Legge laminatgulv">
+<div class="card-top"><span class="category">GULV</span><span class="card-status ">Kommer</span></div>
+<div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="9" width="36" height="30" rx="2"/><path d="M6 19h36M6 29h36M20 9v10m11 0v10M17 29v10"/></svg></div>
+<h3>Legge laminatgulv</h3><p>Planlagt guide til underlag, klikkskjøter og tilpasning av gulvbord.</p><div class="card-footer"><span>Guide under planlegging</span></div></article>
+<article class="guide-card planned"  data-search="vindu vinduer vindusmontering karm vinduskarm tetting innsetting" data-name="Montere vindu">
+<div class="card-top"><span class="category">VINDU</span><span class="card-status ">Kommer</span></div>
+<div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="6" width="34" height="36" rx="2"/><path d="M12 11h24v26H12zM24 11v26m-12-13h24"/></svg></div>
+<h3>Montere vindu</h3><p>Planlagt visning av plassering, innfesting og tetting rundt karmen.</p><div class="card-footer"><span>Guide under planlegging</span></div></article></div>
+<div id="empty" class="empty-search" hidden><h3>Ingen jobber passer til søket</h3><p>Prøv et produkt eller en del, som «gips», «skruer» eller «stender».</p><button id="clear-search" class="ghost" type="button">Vis alle jobber</button></div></section>
+<footer class="home-footer"><span>Første versjon · Gips og stenderverk deler samme demomodell.</span><span>Demovisningene er illustrasjoner, ikke monteringsanvisninger.</span></footer>
+</main><script src="home.js" defer></script></body></html>
